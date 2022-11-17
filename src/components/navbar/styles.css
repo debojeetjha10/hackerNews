@@ -1,0 +1,15 @@
+.navbar {
+    position: sticky;
+    top: 0;
+    right: 0;
+    width: 100vw;
+    min-height: 10vh;
+    padding: 1vh;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    z-index: 10;
+}
