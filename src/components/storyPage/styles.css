@@ -1,0 +1,11 @@
+.page-changer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+.page-number{
+    padding: 0 1vw 0 1vw;
+    position: sticky;
+    bottom: 0;
+}

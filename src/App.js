@@ -1,15 +1,18 @@
 import React from 'react';
-import './App.css';
-import Navbar from './components/navbar';
-import StoryPage from './components/storyPage';
+import {BrowserRouter, Routes, Route} from 'react-router-dom';
+import HomePage from './pages/homePage';
 
 const App = () => {
   return (
-    <div className="App">
-      <Navbar/>
-      <StoryPage page={0}/>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<HomePage />}/>
+        {/* //TO-DO
+          <Route path="*" element={<NoPage />} /> */}
+      </Routes>
+    </BrowserRouter>
   );
 };
+
 
 export default App;

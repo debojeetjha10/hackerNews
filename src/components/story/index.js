@@ -3,12 +3,13 @@ import PropTypes from 'prop-types';
 import './styles.css';
 
 const Story = ({title, author, url, createdAt, points = 0, active = true}) => {
+  const date = new Date(createdAt);
   return (<div className='story'>
     <a href={url} target="_new">
       <h2 className='title'>{title}</h2>
     </a>
-    <p className='author'>{author + ' '}Points{': ' + points.toString()+ ' '+
-                                                                 createdAt}</p>
+    <p className='information'>Author: {author + ' || '}Points{': ' + points.toString()+ ' || '+
+                                          'Posted On: ' + date.toDateString()}</p>
   </div>);
 };
 

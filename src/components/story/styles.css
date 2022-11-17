@@ -4,4 +4,5 @@ a {
 .story {
     padding: 2vh 2vw 2vh 2vw;
     border: 1px solid grey;
+    border-top: 0;
 }

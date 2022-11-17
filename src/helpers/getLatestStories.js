@@ -6,7 +6,7 @@ const getLatestStories = async (page = 0, createdAtLessThan = Date.now()) => {
     `?tags=story&&numericFilters=created_at_i<${createdAtLessThan}&page=${page}`;
   console.log(URL);
   const res = await axios.get(URL);
-  return res.data.hits;
+  return res.data;
 };
 
 export default getLatestStories;
