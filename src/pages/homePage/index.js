@@ -7,7 +7,7 @@ const HomePage = () => {
   return (
     <>
       <Navbar/>
-      <StoryPage page={0}/>
+      <StoryPage/>
     </>
   );
 };
