@@ -8,20 +8,25 @@
     box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 5px;
     padding: 0 3vw 0 3vw;
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
     background-color: white;
     z-index: 10;
 }
 
-.search-icon{
+.search-icon {
     height: 1.5em;
     width: 1.5em;
 }
-.search-button{
+
+.search-button {
     display: flex;
     align-items: center;
     flex-direction: row;
     justify-content: center;
+}
+
+.newspaper-logo {
+    height: 1.5em;
 }

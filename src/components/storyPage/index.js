@@ -40,6 +40,7 @@ const StoryPage = ({ }) => {
             title={element.title} author={element.author}
             url={element.url}
             createdAt={element.created_at}
+            comments={element.num_comments}
             points={element.points}
           /></li>;
         })}
