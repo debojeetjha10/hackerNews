@@ -6,6 +6,7 @@ import './styles.css';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import {useSelector} from 'react-redux';
+import MessageScreen from '../messageScreen';
 
 const SearchResults = () => {
   const [isLoading, setLoading] = useState(true);
@@ -18,9 +19,9 @@ const SearchResults = () => {
   useEffect(() => {
     setPreButton(true);
     setNextButton(true);
-    console.log(URL);
+    const urlWithPage = URL + `&page=${page}`;
     setLoading(true);
-    axios.get(URL).then((data) => {
+    axios.get(urlWithPage).then((data) => {
       setLoading(false);
       setStories(data.data.hits);
 
@@ -31,45 +32,51 @@ const SearchResults = () => {
       else {
         setNextButton(false);
       }
-    }).catch((err)=>{
+    }).catch((err) => {
+      setLoading(false);
       console.log(err);
       return;
     });
-  }, [URL]);
-  console.log(URL);
+  }, [URL, page]);
   return <>
-    {isLoading ? <Loading /> :
-            <ol className='stories'>
-              {stories.map((element) => {
-                if (element._tags[0] === 'story') {
-                  return <li key={element.objectID}><Story
-                    title={element.title} author={element.author}
-                    url={element.url}
-                    createdAt={element.created_at}
-                    comments={element.num_comments}
-                    points={element.points}
-                  /></li>;
-                }
-                if (element._tags[0] === 'comment') {
-                  return <li key={element.objectID}>
-                    <Comment
-                      commentText={element.comment_text}
-                      storyUrl={element.story_url}
-                      points={element.points?element.points:0}
-                      createdAt={element.created_at}
-                      author={element.author}
-                    />
-                  </li>;
-                }
-                return null;
-              })}
-            </ol>
+    {isLoading ? <Loading /> : (stories.length == 0) ? <MessageScreen msg={URL === '' ? 'Enter a Query⁉️' :
+      'OOPS😟!Couldn\'t find anything'} /> :
+      <>
+        < ol className='stories'>
+          {stories.map((element) => {
+            if (element._tags[0] === 'story') {
+              return <li key={element.objectID}><Story
+                title={element.title} author={element.author}
+                url={element.url}
+                createdAt={element.created_at}
+                comments={element.num_comments}
+                points={element.points}
+              /></li>;
+            }
+            if (element._tags[0] === 'comment') {
+              return <li key={element.objectID}>
+                <Comment
+                  commentText={element.comment_text}
+                  storyUrl={element.story_url}
+                  points={element.points ? element.points : 0}
+                  createdAt={element.created_at}
+                  author={element.author}
+                />
+              </li>;
+            }
+            return null;
+          })}
+
+        </ol>
+
+
+        <div className='page-changer'>
+          <button onClick={() => setPage((page) => page - 1)} disabled={prevButton}>&lt;previous poge</button>
+          <p className='page-number'>{page}</p>
+          <button onClick={() => setPage((page) => page + 1)} disabled={nextButton}>next page&gt;</button>
+        </div>
+      </>
     }
-    <div className='page-changer'>
-      <button onClick={() => setPage((page) => page - 1)} disabled={prevButton}>&lt;previous poge</button>
-      <p className='page-number'>{page}</p>
-      <button onClick={() => setPage((page) => page + 1)} disabled={nextButton}>next page&gt;</button>
-    </div>
   </>;
 };
 
