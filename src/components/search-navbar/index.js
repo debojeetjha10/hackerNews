@@ -20,6 +20,7 @@ const SearchNavbar = () => {
   const dispatch = useDispatch();
 
   const [query, setQuery] = useState('');
+  const [err, setErr] = useState('');
   const [searchTag, setSearchTag] = useState(tags[0]);
   const [sortby, setSortBy] = useState(sortOptions[0]);
   const [fromDate, setFromDate] = useState(getDateString(new Date(Date.now() - 3600 * 24 * 1000)));
@@ -30,6 +31,10 @@ const SearchNavbar = () => {
     const searchBYDate = sortby === 'Date';
     const createdATStart = Date.parse(fromDate);
     const createdATEnd = Date.parse(toDate) + 3600 * 100;
+    if (createdATStart >= createdATEnd) {
+      setErr('Select a valid date range.');
+      return;
+    } else setErr('');
     const URL = getSearchedStories(searchTag, query, createdATStart, createdATEnd, searchBYDate, 0);
     dispatch(changeURL(URL));
   };
@@ -80,6 +85,7 @@ const SearchNavbar = () => {
           setToDate(e.target.value)} type='Date' />
       </label>
     </div>
+    {(err !== '') && <p className='err'>{err}</p>}
   </div>);
 };
 
