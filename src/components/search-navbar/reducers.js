@@ -1,12 +1,24 @@
-import {CHANGE_SEARCH_URL} from './constants';
+import {CHANGE_QUERY, CHANGE_SEARCH_URL} from './constants';
 
-const searchURLReducer = (state='', action)=>{
+const searchURLReducer = (state = '', action) => {
   switch (action.type) {
     case CHANGE_SEARCH_URL:
       return action.payload;
     default:
-      return '';
+      return state;
   }
 };
 
-export default searchURLReducer;
+const searchQueryReducer = (state = '', action) => {
+  switch (action.type) {
+    case CHANGE_QUERY:
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
+export {
+  searchURLReducer,
+  searchQueryReducer,
+};

@@ -1,11 +1,11 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 import getDateString from '../../helpers/getDateString';
 import newsPaper from '../../icons/news.png';
 import getSearchedStories from '../../helpers/getSearchedStories';
 import './styles.css';
-import {useDispatch} from 'react-redux';
-import {CHANGE_SEARCH_URL} from './constants';
+import {useDispatch, useSelector} from 'react-redux';
+import {CHANGE_QUERY, CHANGE_SEARCH_URL} from './constants';
 
 const changeURL = (URL) => {
   return {
@@ -13,21 +13,34 @@ const changeURL = (URL) => {
     payload: URL,
   };
 };
-
+const debounce = (func, timeout = 300) => {
+  let timer;
+  return (...args) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      func.apply();
+    }, timeout);
+  };
+};
+const changeQuery = (query) => {
+  return {
+    type: CHANGE_QUERY,
+    payload: query,
+  };
+};
 const SearchNavbar = () => {
   const tags = ['story', 'comment', 'all'];
   const sortOptions = ['Date', 'Popularity'];
   const dispatch = useDispatch();
 
-  const [query, setQuery] = useState('');
+  const query = useSelector((store) => store.searchQuery);
   const [err, setErr] = useState('');
   const [searchTag, setSearchTag] = useState(tags[0]);
   const [sortby, setSortBy] = useState(sortOptions[0]);
   const [fromDate, setFromDate] = useState(getDateString(new Date(Date.now() - 3600 * 24 * 1000)));
   const [toDate, setToDate] = useState(getDateString(new Date(Date.now())));
 
-  const onSubmit = (e) => {
-    e.preventDefault();
+  const updateSearchURL = () => {
     const searchBYDate = sortby === 'Date';
     const createdATStart = Date.parse(fromDate);
     const createdATEnd = Date.parse(toDate) + 3600 * 100;
@@ -35,9 +48,16 @@ const SearchNavbar = () => {
       setErr('Select a valid date range.');
       return;
     } else setErr('');
-    const URL = getSearchedStories(searchTag, query, createdATStart, createdATEnd, searchBYDate, 0);
+    const URL = getSearchedStories(searchTag, query, createdATStart, createdATEnd, searchBYDate);
     dispatch(changeURL(URL));
   };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    updateSearchURL();
+  };
+
+  useEffect(debounce(() => updateSearchURL()), [query, sortby, fromDate, toDate, searchTag]);
 
   return (<div className='search-navbar'>
     <div className='logo-query-box'>
@@ -49,7 +69,7 @@ const SearchNavbar = () => {
       <form onSubmit={onSubmit}>
         <input type='text' value={query} onChange={(e) => {
           e.preventDefault();
-          setQuery(e.target.value);
+          dispatch(changeQuery(e.target.value));
         }} className='query-box' placeholder='Enter Query' />
       </form>
       <Link to='/' className='width-30vw text-right'>
