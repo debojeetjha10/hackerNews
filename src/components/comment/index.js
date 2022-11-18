@@ -2,10 +2,10 @@ import React from 'react';
 import './styles.css';
 import PropTypes from 'prop-types';
 
-const Comment = ({commentText, points, storyUrl, author, date}) => {
-  date = new Date(date);
+const Comment = ({commentText, points, storyUrl, author, createdAt}) => {
+  const date = new Date(createdAt);
   return (<div>
-    <h3>{commentText}</h3>
+    <div dangerouslySetInnerHTML={{__html: commentText}} />
     <p className='information'>Author: {author + ' | '}Points{': ' + points.toString() + ' | ' +
             'Posted On: ' + date.toDateString()}</p>
     <a href={storyUrl}>Story Link: {storyUrl}</a>
@@ -17,6 +17,6 @@ Comment.propTypes = {
   points: PropTypes.number,
   storyUrl: PropTypes.string,
   author: PropTypes.string,
-  date: PropTypes.string,
+  createdAt: PropTypes.string,
 };
 export default Comment;

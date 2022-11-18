@@ -12,7 +12,8 @@ const getSearchedStories = (tag, query, createdATStart, createdAtEnd, sortByDate
             `created_at_i>${createdATStart/1000}&page=${page}`;
   }
   return BASE_URL_SEARCH_BY_PREF +
-        `?query=${query}&tags=${queryTag}&page=${page}`;
+    `?query=${query}&tags=${queryTag}&numericFilters=created_at_i<${createdAtEnd / 1000},` +
+    `created_at_i>${createdATStart / 1000}&page=${page}`;
 };
 
 export default getSearchedStories;
