@@ -6,7 +6,7 @@ const Story = ({title, author, url, createdAt, comments = 0, points = 0, active 
   const date = new Date(createdAt);
   return (<div className='story'>
     <a href={url} target="_blank" rel="noreferrer">
-      <h2 className='title'>{title}</h2>
+      <h3 className='title'>{title}</h3>
     </a>
     <p className='information'>Author: {author + ' | '}Points{': ' + points.toString() + ' | ' +
       comments + ' comments | ' +
