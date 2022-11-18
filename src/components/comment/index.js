@@ -10,8 +10,8 @@ const Comment = ({commentText, points, storyUrl, author, createdAt}) => {
   return (<div className='comments'>
     <h3>Comment:</h3>
     <div dangerouslySetInnerHTML={{
-      __html: commentText.replace(new RegExp(`${query}`, 'ig'),
-          `<span style="background-color:yellow"> ${query}</span>`),
+      __html: (query !== '') ? commentText.replace(new RegExp(`${query}`, 'ig'),
+          `<span style="background-color:yellow"> ${query}</span>`) : commentText,
     }} />
     <p className='information'><b>Author: {author + ' | '}Points{': ' + points.toString() + ' | ' +
       'Posted On: ' + date.toDateString()}</b></p>
