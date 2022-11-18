@@ -4,28 +4,34 @@ import getDateString from '../../helpers/getDateString';
 import newsPaper from '../../icons/news.png';
 import getSearchedStories from '../../helpers/getSearchedStories';
 import './styles.css';
-import SearchResults from '../searchResults';
-import axios from 'axios';
+import {useDispatch} from 'react-redux';
+import {CHANGE_SEARCH_URL} from './constants';
+
+const changeURL = (URL) => {
+  return {
+    type: CHANGE_SEARCH_URL,
+    payload: URL,
+  };
+};
 
 const SearchNavbar = () => {
   const tags = ['story', 'comment', 'all'];
   const sortOptions = ['Date', 'Popularity'];
+  const dispatch = useDispatch();
+
   const [query, setQuery] = useState('');
-  const [data, setData] = useState([]);
   const [searchTag, setSearchTag] = useState(tags[0]);
   const [sortby, setSortBy] = useState(sortOptions[0]);
   const [fromDate, setFromDate] = useState(getDateString(new Date(Date.now() - 3600 * 24 * 1000)));
   const [toDate, setToDate] = useState(getDateString(new Date(Date.now())));
 
-  const onSubmit = async (e) => {
+  const onSubmit = (e) => {
     e.preventDefault();
     const searchBYDate = sortby === 'Date';
     const createdATStart = Date.parse(fromDate);
     const createdATEnd = Date.parse(toDate) + 3600 * 100;
     const URL = getSearchedStories(searchTag, query, createdATStart, createdATEnd, searchBYDate, 0);
-    console.log(URL);
-    const res = await axios.get(URL);
-    setData(res.data.hits);
+    dispatch(changeURL(URL));
   };
 
   return (<div className='search-navbar'>
@@ -74,8 +80,6 @@ const SearchNavbar = () => {
           setToDate(e.target.value)} type='Date' />
       </label>
     </div>
-    {data ? <SearchResults stories={data} /> : null}
-
   </div>);
 };
 
