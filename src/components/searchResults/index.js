@@ -39,7 +39,7 @@ const SearchResults = () => {
     });
   }, [URL, page]);
   return <>
-    {isLoading ? <Loading /> : (stories.length == 0) ? <MessageScreen msg={URL === '' ? 'Enter a Query⁉️' :
+    {isLoading ? <Loading /> : (!stories || stories.length == 0) ? <MessageScreen msg={URL === '' ? 'Enter a Query⁉️' :
       'OOPS😟!Couldn\'t find anything'} /> :
       <>
         < ol className='stories'>

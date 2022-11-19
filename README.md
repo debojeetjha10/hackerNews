@@ -1,7 +1,7 @@
 # Hacker News
 ___
 
-## Website: https://sprightly-tiramisu-421e4c.netlify.app
+## Website: https://heckernews.netlify.app/
 Technologies used 
 - React
 - Redux
