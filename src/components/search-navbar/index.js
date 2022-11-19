@@ -62,7 +62,7 @@ const SearchNavbar = () => {
 
   return (<div className='search-navbar'>
     <div className='logo-query-box'>
-      <Link to='/search' onClick={() => window.location.reload()} className='width-30vw text-left'>
+      <Link to='/search' className='width-30vw text-left'>
         <div className='logo'>
           <h2><img className='newspaper-logo' src={newsPaper} alt='LOGO' />Search Hacker News</h2>
         </div>
