@@ -1,7 +1,7 @@
 # Hacker News
 ___
 
-## Website: https://heckernews.netlify.app/
+## Website: https://heckernews.netlify.app
 Technologies used 
 - React
 - Redux
