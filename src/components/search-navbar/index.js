@@ -4,6 +4,7 @@ import getDateString from '../../helpers/getDateString';
 import newsPaper from '../../icons/news.png';
 import getSearchedStories from '../../helpers/getSearchedStories';
 import './styles.css';
+import homeIcon from '../../icons/home.png';
 import {useDispatch, useSelector} from 'react-redux';
 import {CHANGE_QUERY, CHANGE_SEARCH_URL} from './constants';
 
@@ -73,7 +74,7 @@ const SearchNavbar = () => {
         }} className='query-box' placeholder='Enter Query' />
       </form>
       <Link to='/' className='width-30vw text-right'>
-        <h2>Go to Home</h2>
+        <h2 className='home-icon'><img src={homeIcon} alt='home icon'/></h2>
       </Link>
     </div>
     <div className='filters'>
