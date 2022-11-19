@@ -5,7 +5,7 @@ import './styles.css';
 import {useSelector} from 'react-redux';
 import getBaseURL from '../../helpers/getBaseURL';
 
-const Story = ({title, author, url, createdAt, comments = 0, points = 0, objectId, highlighted = false}) => {
+const Story = ({title, author, url, createdAt, objectId, comments = 0, points = 0, highlighted = false}) => {
   const [alreadyVisited, setAlreadyVisited] = useState(localStorage.getItem(objectId));
 
   const date = new Date(createdAt);
