@@ -1,24 +1,35 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import Highlighter from 'react-highlight-words';
 import './styles.css';
 import {useSelector} from 'react-redux';
+import getBaseURL from '../../helpers/getBaseURL';
 
-const Story = ({title, author, url, createdAt, comments = 0, points = 0, active = true}) => {
+const Story = ({title, author, url, createdAt, comments = 0, points = 0, objectId, highlighted = false}) => {
+  const [alreadyVisited, setAlreadyVisited] = useState(localStorage.getItem(objectId));
+
   const date = new Date(createdAt);
   const query = useSelector((store) => store.searchQuery);
-  return (<div className='story'>
-    <a href={url} target="_blank" rel="noreferrer">
-      <h3 className='title'> <Highlighter
-        highlightClassName="YourHighlightClass"
-        searchWords={[query]}
-        autoEscape={true}
-        textToHighlight={title}
-      /></h3>
+
+  return (<div className={`story ${alreadyVisited ? 'opace' : ''}`}>
+    <a href={url} target="_blank" rel="noreferrer" onClick={() => {
+      localStorage.setItem(objectId, true);
+      setAlreadyVisited(true);
+    }}>
+      <div className='story-title'>
+        <h3 className='title'> {(query !== '' && highlighted) ? <Highlighter
+          highlightClassName="YourHighlightClass"
+          searchWords={[query]}
+          autoEscape={true}
+          textToHighlight={title}
+        /> : title}</h3>
+        {(url === '' || !url) ? null : <p>{`(${getBaseURL(url)})`}</p>}
+      </div>
     </a>
     <p className='information'>Author: {author + ' | '}Points{': ' + points.toString() + ' | ' +
       comments + ' comments | ' +
       'Posted On: ' + date.toDateString()}</p>
+    {alreadyVisited && <i>previously visited</i>}
   </div>);
 };
 
@@ -29,6 +40,7 @@ Story.propTypes = {
   createdAt: PropTypes.string,
   comments: PropTypes.number,
   points: PropTypes.number,
-  active: PropTypes.bool,
+  objectId: PropTypes.string,
+  highlighted: PropTypes.bool,
 };
 export default Story;

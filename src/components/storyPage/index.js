@@ -42,6 +42,7 @@ const StoryPage = ({ }) => {
             createdAt={element.created_at}
             comments={element.num_comments}
             points={element.points}
+            objectId={element.objectID.toString()}
           /></li>;
         })}
       </ol>

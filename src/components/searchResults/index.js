@@ -51,6 +51,8 @@ const SearchResults = () => {
                 createdAt={element.created_at}
                 comments={element.num_comments}
                 points={element.points}
+                objectId={element.objectID}
+                highlighted={true}
               /></li>;
             }
             if (element._tags[0] === 'comment') {
@@ -61,6 +63,7 @@ const SearchResults = () => {
                   points={element.points ? element.points : 0}
                   createdAt={element.created_at}
                   author={element.author}
+                  highlighted={true}
                 />
               </li>;
             }

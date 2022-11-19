@@ -3,14 +3,14 @@ import './styles.css';
 import PropTypes from 'prop-types';
 import {useSelector} from 'react-redux';
 
-const Comment = ({commentText, points, storyUrl, author, createdAt}) => {
+const Comment = ({commentText, points, storyUrl, author, createdAt, highlighted=false}) => {
   const date = new Date(createdAt);
   const query = useSelector((store) => store.searchQuery);
 
   return (<div className='comments'>
     <h3>Comment:</h3>
     <div dangerouslySetInnerHTML={{
-      __html: (query !== '') ? commentText.replace(new RegExp(`${query}`, 'ig'),
+      __html: (query !== '' && highlighted) ? commentText.replace(new RegExp(`${query}`, 'ig'),
           `<span style="background-color:yellow"> ${query}</span>`) : commentText,
     }} />
     <p className='information'><b>Author: {author + ' | '}Points{': ' + points.toString() + ' | ' +
@@ -26,5 +26,6 @@ Comment.propTypes = {
   storyUrl: PropTypes.string,
   author: PropTypes.string,
   createdAt: PropTypes.string,
+  highlighted: PropTypes.bool,
 };
 export default Comment;

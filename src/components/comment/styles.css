@@ -7,3 +7,7 @@
 .story-url {
     text-decoration: underline;
 }
+
+.comments:hover {
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 5px;
+}
