@@ -4,15 +4,17 @@ import Highlighter from 'react-highlight-words';
 import './styles.css';
 import {useSelector} from 'react-redux';
 import getBaseURL from '../../helpers/getBaseURL';
+import isTruth from '../../helpers/isTruth';
 
 const Story = ({title, author, url, createdAt, objectId, comments = 0, points = 0, highlighted = false}) => {
-  const [alreadyVisited, setAlreadyVisited] = useState(localStorage.getItem(objectId));
+  const [alreadyVisited, setAlreadyVisited] = useState(localStorage.getItem(objectId) && isTruth(url));
 
   const date = new Date(createdAt);
   const query = useSelector((store) => store.searchQuery);
 
   return (<div className={`story ${alreadyVisited ? 'opace' : ''}`}>
     <a href={url} target="_blank" rel="noreferrer" onClick={() => {
+      if (!isTruth(url)) return;
       localStorage.setItem(objectId, true);
       setAlreadyVisited(true);
     }}>
