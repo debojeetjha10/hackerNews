@@ -6,7 +6,7 @@ Technologies used
 - React
 - Redux
 - algolia API
-## ScreenShots
+## Screenshots
 
 ---
 ### Home Page
